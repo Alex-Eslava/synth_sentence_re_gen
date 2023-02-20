@@ -1,0 +1,5 @@
+seed: 2022
+template_to_use: 'example_templates'
+avg_repetitions: 10
+variance: 3
+out_path: 'synth.csv'
