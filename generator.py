@@ -8,26 +8,19 @@ from sentence_templates import *
 from sentence_templates_variables import LOCATION, NAME, QUESTION
 
 config_file = 'config.yml'
-# Setting defaults
-seed = 2022
-template_to_use = 'example_templates'
-avg_repetitions = 10
-variance = 3
-out_path = 'synth.csv'
 # Loading config if exists
 try: 
     import yaml
     with open(config_file, "r") as stream:
         config = yaml.safe_load(config_file)
-        seed = config.get("seed", seed)
-        template_to_use = config.get("template_to_use", template_to_use)
-        avg_repetitions = config.get("avg_repetitions", avg_repetitions)
-        variance = config.get("variance", variance)
-        out_path = config.get("out_path", out_path)
-    print("Config loaded, non-specified values are set to default...")
 except: 
-    print("Couldn't load config, going for default values...")
+    config = {}
 
+seed = config.get("seed", 42)
+template_to_use = config.get("template_to_use", 'example_templates')
+avg_repetitions = config.get("avg_repetitions", 1)
+variance = config.get("variance", 0)
+out_path = config.get("out_path", 'synth.csv')
 
 if __name__ == "__main__":
     np.random.seed(seed)
