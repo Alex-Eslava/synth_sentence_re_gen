@@ -5,7 +5,7 @@ import pandas as pd
 
 # Templating imports
 from sentence_templates import *
-from template_variables import LOCATION, NAME, QUESTION
+from sentence_templates_variables import LOCATION, NAME, QUESTION
 
 config_file = 'config.yml'
 # Setting defaults
@@ -29,23 +29,24 @@ except:
     print("Couldn't load config, going for default values...")
 
 
-np.random.seed(seed)
-random.seed(seed)
-synthesized = []
+if __name__ == "__main__":
+    np.random.seed(seed)
+    random.seed(seed)
+    synthesized = []
 
-templates = eval(template_to_use)
+    templates = eval(template_to_use)
 
-for n in range(len(templates)):
-    n_repetitions_per_template = randint(avg_repetitions-variance, avg_repetitions+variance)
-    for j in range(n_repetitions_per_template):
-        sentence = templates[n]
-        keys_to_keep =[key.replace("$","") for key in re.findall("[$]\w+", sentence)]
-        for key in keys_to_keep: 
-            word_to_fill = np.random.choice(eval(key))
-            sentence = sentence.replace(f"${str(key)}", word_to_fill)
-        synthesized.append(sentence)
+    for n in range(len(templates)):
+        n_repetitions_per_template = randint(avg_repetitions-variance, avg_repetitions+variance)
+        for j in range(n_repetitions_per_template):
+            sentence = templates[n]
+            keys_to_keep =[key.replace("$","") for key in re.findall("[$]\w+", sentence)]
+            for key in keys_to_keep: 
+                word_to_fill = np.random.choice(eval(key))
+                sentence = sentence.replace(f"${str(key)}", word_to_fill)
+            synthesized.append(sentence)
 
-print(f"we generated {len(synthesized)} synthetic sentences---->")
+    print(f"we generated {len(synthesized)} synthetic sentences---->")
 
-df = pd.DataFrame(synthesized, columns=['sentences'])
-df.to_csv(out_path, sep='|')
+    df = pd.DataFrame(synthesized, columns=['sentences'])
+    df.to_csv(out_path, sep='|')
