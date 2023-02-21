@@ -7,9 +7,6 @@ import pandas as pd
 from sentence_templates import *
 from sentence_templates_variables import LOCATION, NAME, QUESTION
 
-
-
-
 if __name__ == "__main__":
     config_file = 'config.yml'
     try: 
